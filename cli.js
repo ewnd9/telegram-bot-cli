@@ -12,13 +12,13 @@ var run = function(token) {
   } else {
 		var r = null;
 
-    if (argv['_'].length === 1) {
+    if (!argv['chat_id']) {
       var mask = argv['_'][0];
 
       r = require('./lib/index')(config, token).selectChatDialog(mask);
     } else {
-      var chatId = argv['_'][0];
-      var mask = argv['_'][1];
+      var chatId = argv['chat_id'];
+      var mask = argv['_'][0];
 
       r = require('./lib/index')(config, token).sendFiles(chatId, mask);
     }

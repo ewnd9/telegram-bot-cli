@@ -14,8 +14,8 @@ $ npm install -g telegram-bot-cli
 
 ```
 $ telegram-bot "<file_mask>"
-$ telegram-bot <chat_id> "<file_mask>"
-$ telegram-bot <chat_id> "<file_mask>" --token=<token>
+$ telegram-bot "<file_mask>" --chat_id=<chat_id>
+$ telegram-bot "<file_mask>" --chat_id=<chat_id> --token=<token>
 ```
 
 ## Roadmap
