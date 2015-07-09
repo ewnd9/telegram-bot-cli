@@ -5,42 +5,50 @@ var inquirer = require('inquirer-bluebird');
 
 var argv = require('minimist')(process.argv.slice(2));
 var run = function(token) {
-  if (argv['_'].length === 0 && !argv['message']) {
+  var lib = require('./lib/index')(config, token);
+
+  if (argv['list']) {
+    return lib.getChats().then(function(chats) {
+      chats.forEach(function(chat) {
+        console.log((chat.title || chat.first_name + ' ' + chat.last_name) + ' (id: ' + chat.id + ')');
+      });
+    });
+  } else if (argv['_'].length === 0 && !argv['message']) {
     console.log('File path or mask is required');
     process.exit(1);
   } else {
-		var r = null;
-    var lib = require('./lib/index')(config, token);
+    var r = null;
 
-    if (argv['message']) {
-      var chatId = argv['chat_id'];
+    (function() {
+      if (argv['message']) {
+        var chatId = argv['chat_id'];
 
-      if (argv['chat_id']) {
-        r = lib.sendMessage(chatId, argv['message']);
-      } else {
-        r = lib.selectChatDialog(mask).then(function(chatId) {
+        if (argv['chat_id']) {
           return lib.sendMessage(chatId, argv['message']);
-        });
-      }
-    } else {
-      var mask = argv['_'][0];
-
-      if (argv['chat_id']) {
-        r = lib.sendFiles(argv['chat_id'], mask);
+        } else {
+          return lib.selectChatDialog().then(function(chatId) {
+            return lib.sendMessage(chatId, argv['message']);
+          });
+        }
       } else {
-        r = lib.selectChatDialog(mask).then(function(chatId) {
-          return lib.sendFiles(chatId, mask);
-        });
-      }
-    }
+        var mask = argv['_'][0];
 
-		r.then(function(ids) {
+        if (argv['chat_id']) {
+          return lib.sendFiles(argv['chat_id'], mask);
+        } else {
+          return lib.selectChatDialog().then(function(chatId) {
+            return lib.sendFiles(chatId, mask);
+          });
+        }
+      }
+    })().then(function(ids) {
       console.log('success (ids: ' + ids + ')');
     }).catch(function(err) {
-			console.log(err.message || err.description);
+  		console.log(err.message || err.description);
       process.exit(1);
-		});
+    });
   }
+
 };
 
 if (argv['token']) {
