@@ -13,9 +13,14 @@ $ npm install -g telegram-bot-cli
 ## Usage
 
 ```
-$ telegram-bot "<file_mask>"
+# send files by mask
+$ telegram-bot "<file_mask>" # show dialog with chat selection
 $ telegram-bot "<file_mask>" --chat_id=<chat_id>
 $ telegram-bot "<file_mask>" --chat_id=<chat_id> --token=<token>
+
+# send message
+$ telegram-bot --message="message from bot" --chat_id=<chat_id>
+$ telegram-bot --message="message from bot" --chat_id=<chat_id> --token=<token>
 ```
 
 ## Roadmap
