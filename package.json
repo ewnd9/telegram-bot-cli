@@ -1,6 +1,6 @@
 {
   "name": "telegram-bot-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "telegram-bot-cli",
   "main": "cli.js",
   "scripts": {
