@@ -16,16 +16,26 @@ describe('telegram-bot-cli', function() {
 
   var chats = [chat(0), chat(1)];
 
-  var config = require('dot-file-config')('.telegram-bot-cli');
-  config.data.token = 'whatever';
-  config.save();
+  var dotFileConfigMock = function() {
+    return {
+      data: {
+        token: 'whatever'
+      },
+      save: function() {
+        // nothing
+      }
+    };
+  };
 
-  var libIndexMock = function(done) {
+  var libIndexMock = function(fnName, done) {
     return function() {
       return {
         getChats: function() {
           return new Promise(function(resolve) {
-            done();
+            if (fnName === 'getChats') {
+              done();
+            }
+
             resolve(chats);
           });
         },
@@ -35,41 +45,44 @@ describe('telegram-bot-cli', function() {
           });
         },
         sendMessage: function(chatId) {
-          done();
+          if (fnName === 'sendMessage') {
+            done();
+          }
+
           return '0';
         },
         sendFiles: function(chatId) {
-          done();
+          if (fnName === 'sendFiles') {
+            done();
+          }
+
           return '0';
         }
       };
     };
   };
 
-  var exec = function(args, mocks) {
+  var exec = function(args, fnName, done) {
     for (var i = 0 ; i < args.length ; i++) {
       process.argv[2 + i] = args[i];
     }
 
-    var lib = proxyquire('./cli.js', mocks);
+    var lib = proxyquire('./cli.js', {
+      './lib/index': libIndexMock(fnName, done),
+      'dot-file-config': dotFileConfigMock
+    });
   };
 
 	it('should show list of chats', function(done) {
-		exec(['--list'], {
-      './lib/index': libIndexMock(done)
-    });
+		exec(['--list'], 'getChats', done);
 	});
 
 	it('should send message', function(done) {
-		exec(['--message="message from bot"'], {
-      './lib/index': libIndexMock(done)
-    });
+		exec(['--message="message from bot"'], 'sendMessage', done);
 	});
 
 	it('should send files', function(done) {
-		exec(['"*.js"'], {
-      './lib/index': libIndexMock(done)
-    });
+		exec(['"*.js"'], 'sendFiles', done);
 	});
 
 });
