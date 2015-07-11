@@ -62,7 +62,10 @@ describe('telegram-bot-cli', function() {
       process.argv[2 + i] = args[i];
     }
 
-    var lib = proxyquire('./cli.js', {
+    var bins = require('./package.json').bin;
+    var keys = Object.keys(bins);
+
+    var lib = proxyquire(bins[keys[0]], {
       './lib/index': libIndexMock(fnName, done),
       'dot-file-config': dotFileConfigMock
     });
