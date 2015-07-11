@@ -5,7 +5,7 @@ var expect = require('chai').expect;
 var Promise = require('bluebird');
 var proxyquire =  require('proxyquire');
 
-describe("dot-file-config", function() {
+describe('telegram-bot-cli', function() {
 
   var chat = function(id) {
     return {
@@ -15,6 +15,10 @@ describe("dot-file-config", function() {
   };
 
   var chats = [chat(0), chat(1)];
+
+  var config = require('dot-file-config')('.telegram-bot-cli');
+  config.data.token = 'whatever';
+  config.save();
 
   var libIndexMock = function(done) {
     return function() {
