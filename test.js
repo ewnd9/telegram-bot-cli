@@ -31,18 +31,13 @@ describe('telegram-bot-cli', function() {
     return function() {
       return {
         getChats: function() {
-          return new Promise(function(resolve) {
-            if (fnName === 'getChats') {
-              done();
-            }
-
-            resolve(chats);
+          return Promise.resolve(chats).then(function(chats) {
+            done();
+            return chats;
           });
         },
         selectChatDialog: function() {
-          return new Promise(function(resolve) {
-            resolve(chats[0]);
-          });
+          return Promise.resolve(chats[0]);
         },
         sendMessage: function(chatId) {
           if (fnName === 'sendMessage') {
