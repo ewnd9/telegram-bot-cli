@@ -1,5 +1,7 @@
 # telegram-bot-cli
 
+[![Build Status](https://travis-ci.org/ewnd9/telegram-bot-cli.svg?branch=master)](https://travis-ci.org/ewnd9/telegram-bot-cli)
+
 Unofficial telegram bot cli
 
 ## Install
