@@ -2,8 +2,6 @@
 
 Unofficial telegram bot cli
 
-Work In Progress
-
 ## Install
 
 ```
@@ -22,6 +20,7 @@ $ telegram-bot "<file_mask>" --chat_id=<chat_id>
 $ telegram-bot "<file_mask>" --chat_id=<chat_id> --token=<token>
 
 # send message
+$ telegram-bot --message="message from bot"
 $ telegram-bot --message="message from bot" --chat_id=<chat_id>
 $ telegram-bot --message="message from bot" --chat_id=<chat_id> --token=<token>
 ```
@@ -29,4 +28,3 @@ $ telegram-bot --message="message from bot" --chat_id=<chat_id> --token=<token>
 ## Roadmap
 
 - [ ] Load-spinner
-- [ ] Tests
