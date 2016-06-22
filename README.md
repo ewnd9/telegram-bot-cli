@@ -4,6 +4,16 @@
 
 Unofficial telegram bot cli
 
+:warning: Deprecation notice: Use `curl` and aliases instead
+
+```sh
+alias send-tg="curl \"https://api.telegram.org/bot$TOKEN/sendMessage?chat_id=$CHAT_ID&text=$TEXT\""
+```
+
+## Related
+
+- https://core.telegram.org/bots/api - api documentation
+
 ## Install
 
 ```
@@ -26,7 +36,3 @@ $ telegram-bot --message="message from bot"
 $ telegram-bot --message="message from bot" --chat_id=<chat_id>
 $ telegram-bot --message="message from bot" --chat_id=<chat_id> --token=<token>
 ```
-
-## Roadmap
-
-- [ ] Load-spinner
