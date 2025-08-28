@@ -16,9 +16,7 @@ alias send-tg="curl \"https://api.telegram.org/bot$TOKEN/sendMessage?chat_id=$CH
 
 ## Install
 
-```
-$ npm install -g telegram-bot-cli
-```
+The `telegram-bot-cli` package was manually unpublished from npm on 2025-08-28. The name has been released for potential future use.
 
 ## Usage
 
